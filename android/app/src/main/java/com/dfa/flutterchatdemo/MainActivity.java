@@ -1,0 +1,6 @@
+package com.ablock.edumap;
+
+import io.flutter.embedding.android.FlutterActivity;
+
+public class MainActivity extends FlutterActivity {
+}
