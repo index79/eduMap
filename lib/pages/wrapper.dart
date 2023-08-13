@@ -26,6 +26,30 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 1,
+          centerTitle: true,
+          toolbarHeight: 90,
+          title: Image.asset('images/logo.png', width: 150),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.access_alarm_sharp,
+                  color: Colors.black45,
+                  size: 30,
+                )),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.notifications_none_outlined,
+                color: Colors.black45,
+                size: 30,
+              ),
+            )
+          ],
+        ),
         body: IndexedStack(
           index: _selectedIndex,
           children: const [
@@ -60,7 +84,7 @@ class _WrapperState extends State<Wrapper> {
               child: Align(
                 alignment: Alignment.center,
                 child: SizedBox(
-                  width: 45,
+                  width: 70,
                   child: FloatingActionButton(
                     heroTag: null,
                     child: Icon(Icons.add),
@@ -101,30 +125,30 @@ class _WrapperState extends State<Wrapper> {
             children: [
               Positioned(
                   top: 0,
-                  right: 70,
+                  right: 80,
                   child: IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(Icons.close, color: Colors.white),
                   )),
               Positioned(
-                top: 20,
-                left: 120,
+                top: 15,
+                left: 122,
                 child: buildIcon('images/quick_request.png', '수업요청하기', null),
               ),
               Positioned(
-                top: 20,
-                right: 120,
+                top: 15,
+                right: 122,
                 child: buildIcon(
                     'images/quick_response.png', '응답한멘토보기', ReceivedEstimate()),
               ),
               Positioned(
-                bottom: 50,
-                left: 120,
+                bottom: 45,
+                left: 122,
                 child: buildIcon('images/quick_chat.png', '채팅보기', ChatList()),
               ),
               Positioned(
-                bottom: 50,
-                right: 125,
+                bottom: 45,
+                right: 130,
                 child: buildIcon('images/quick_community.png', '커뮤니티', null),
               ),
               // Add more child widgets within the Stack as needed
@@ -141,7 +165,7 @@ class _WrapperState extends State<Wrapper> {
       children: [
         Container(
           width: 60,
-          height: 40,
+          height: 45,
           child: IconButton(
               onPressed: () {
                 if (widget != null) {
@@ -151,10 +175,10 @@ class _WrapperState extends State<Wrapper> {
               },
               icon: Image.asset(path)),
         ),
-        SizedBox(height: 5),
+        SizedBox(height: 2),
         Text(
           title,
-          style: TextStyle(fontSize: 10, color: Colors.white),
+          style: TextStyle(fontSize: 12, color: Colors.white),
         )
       ],
     );

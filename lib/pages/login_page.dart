@@ -114,7 +114,7 @@ class LoginPageState extends State<LoginPage> {
               child: Image.asset('images/apple_button.png'),
             ),
           ),
-          SizedBox(height: 150, child: loading ? spinkit : Container()),
+          SizedBox(height: 100, child: loading ? spinkit : Container()),
           SizedBox(
             height: 100,
             child: Row(

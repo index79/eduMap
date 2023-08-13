@@ -223,9 +223,6 @@ class PlacesToLearnState extends State<PlacesToLearn> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Locations'),
-        ),
         body: _currentPosition != null
             ? Stack(
                 children: [
