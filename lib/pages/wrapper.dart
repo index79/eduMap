@@ -64,15 +64,15 @@ class _WrapperState extends State<Wrapper> {
           children: [
             BottomNavigationBar(
               items: [
+                bottomeNavigationBarItem(0, 'images/bottom_icon_home.png', '홈'),
                 bottomeNavigationBarItem(
-                    0, 'images/bottom_studycenter.png', '홈'),
-                bottomeNavigationBarItem(
-                    1, 'images/bottom_studycenter.png', '배움터'),
+                    1, 'images/bottom_icon_center.png', '배움터'),
                 bottomeNavigationBarItem(
                     2, 'images/bottom_studycenter.png', 'e'),
-                bottomeNavigationBarItem(3, 'images/bottom_mentor.png', '멘토찾기'),
                 bottomeNavigationBarItem(
-                    4, 'images/bottom_mentee.png', '받은 견적'),
+                    3, 'images/bottom_icon_findmentor.png', '멘토찾기'),
+                bottomeNavigationBarItem(
+                    4, 'images/bottom_icon_library.png', '받은 견적'),
               ],
               type: BottomNavigationBarType.fixed,
               currentIndex: _selectedIndex,
@@ -120,39 +120,22 @@ class _WrapperState extends State<Wrapper> {
               fit: BoxFit.contain,
             ),
           ),
-          child: Stack(
-            alignment: Alignment.center,
+          child: Wrap(
+            // child: Stack(
+            //   alignment: Alignment.center,
             children: [
-              Positioned(
-                  top: 0,
-                  right: 80,
-                  child: IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.close, color: Colors.white),
-                  )),
-              Positioned(
-                top: 15,
-                left: 122,
-                child: buildIcon('images/quick_request.png', '수업요청하기', null),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.close, color: Colors.white),
               ),
-              Positioned(
-                top: 15,
-                right: 122,
-                child: buildIcon(
-                    'images/quick_response.png', '응답한멘토보기', ReceivedEstimate()),
-              ),
-              Positioned(
-                bottom: 45,
-                left: 122,
-                child: buildIcon('images/quick_chat.png', '채팅보기', ChatList()),
-              ),
-              Positioned(
-                bottom: 45,
-                right: 130,
-                child: buildIcon('images/quick_community.png', '커뮤니티', null),
-              ),
+              buildIcon('images/quick_request.png', '수업요청하기', null),
+              buildIcon(
+                  'images/quick_response.png', '응답한멘토보기', ReceivedEstimate()),
+              buildIcon('images/quick_chat.png', '채팅보기', ChatList()),
+              buildIcon('images/quick_community.png', '커뮤니티', null),
               // Add more child widgets within the Stack as needed
             ],
+            //),
           ),
         );
       },
