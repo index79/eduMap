@@ -38,89 +38,91 @@ class LoginPageState extends State<LoginPage> {
     }
 
     return Material(
-      child: Column(
-        children: [
-          const SizedBox(height: 180),
-          Container(
-            height: 100,
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.black, width: 0.3),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 180),
+            Container(
+              height: 100,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black, width: 0.3),
+                ),
+              ),
+              child: const SizedBox(
+                  width: 300,
+                  child: Center(
+                      child: Text(
+                    '소셜 로그인',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ))),
+            ),
+            const SizedBox(height: 25),
+            TextButton(
+              onPressed: () async {
+                handleLogIn(authProvider, context, 'kakao');
+              },
+              style: styleButton,
+              child: SizedBox(
+                  width: 250, child: Image.asset('images/kakao_button.png')),
+            ),
+            TextButton(
+              onPressed: () {
+                handleLogIn(authProvider, context, 'google');
+              },
+              style: styleButton,
+              child: SizedBox(
+                width: 250,
+                child: Image.asset('images/google_button.png'),
               ),
             ),
-            child: const SizedBox(
-                width: 300,
-                child: Center(
-                    child: Text(
-                  '소셜 로그인',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ))),
-          ),
-          const SizedBox(height: 25),
-          TextButton(
-            onPressed: () async {
-              handleLogIn(authProvider, context, 'kakao');
-            },
-            style: styleButton,
-            child: SizedBox(
-                width: 250, child: Image.asset('images/kakao_button.png')),
-          ),
-          TextButton(
-            onPressed: () {
-              handleLogIn(authProvider, context, 'google');
-            },
-            style: styleButton,
-            child: SizedBox(
-              width: 250,
-              child: Image.asset('images/google_button.png'),
+            TextButton(
+              onPressed: () {
+                // showAlert(context, "title", "naver login");
+              },
+              style: styleButton,
+              child: SizedBox(
+                width: 250,
+                child: Image.asset('images/naver_button.png'),
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              // showAlert(context, "title", "naver login");
-            },
-            style: styleButton,
-            child: SizedBox(
-              width: 250,
-              child: Image.asset('images/naver_button.png'),
+            TextButton(
+              onPressed: () {
+                // showAlert(context, "title", "apple login");
+              },
+              style: styleButton,
+              child: SizedBox(
+                width: 250,
+                child: Image.asset('images/apple_button.png'),
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              // showAlert(context, "title", "apple login");
-            },
-            style: styleButton,
-            child: SizedBox(
-              width: 250,
-              child: Image.asset('images/apple_button.png'),
+            SizedBox(height: 100, child: loading ? spinkit : Container()),
+            SizedBox(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(' 유저 가이드 ', style: buttomTextStyle)),
+                  const Text('|'),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(' 이용 약관 ', style: buttomTextStyle)),
+                  const Text('|'),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(' 이메일 문의 ', style: buttomTextStyle)),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 100, child: loading ? spinkit : Container()),
-          SizedBox(
-            height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                    onPressed: () {},
-                    child: Text(' 유저 가이드 ', style: buttomTextStyle)),
-                const Text('|'),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(' 이용 약관 ', style: buttomTextStyle)),
-                const Text('|'),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(' 이메일 문의 ', style: buttomTextStyle)),
-              ],
-            ),
-          ),
-          const SizedBox(height: 50, child: Text('ABLOCK Inc.'))
-        ],
+            const SizedBox(height: 50, child: Text('ABLOCK Inc.'))
+          ],
+        ),
       ),
     );
   }

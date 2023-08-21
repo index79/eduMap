@@ -37,6 +37,14 @@ class _WrapperState extends State<Wrapper> {
       );
     }
 
+    final List<Widget> _widgetOptions = [
+      Home(),
+      PlacesToLearn(),
+      Empty(),
+      ReceivedEstimate(),
+      ChatList(),
+    ];
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -65,15 +73,19 @@ class _WrapperState extends State<Wrapper> {
             )
           ],
         ),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: const [
-            Home(),
-            PlacesToLearn(),
-            Empty(),
-            ReceivedEstimate(),
-            ChatList(),
-          ],
+        // body: Stack(
+        //   index: _selectedIndex,
+
+        //   children: const [
+        //     Home(),
+        //     PlacesToLearn(),
+        //     Empty(),
+        //     ReceivedEstimate(),
+        //     ChatList(),
+        //   ],
+        // ),
+        body: SafeArea(
+          child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: Stack(
           children: [
@@ -135,19 +147,27 @@ class _WrapperState extends State<Wrapper> {
               fit: BoxFit.contain,
             ),
           ),
-          child: Wrap(
-            // child: Stack(
-            //   alignment: Alignment.center,
+          child: Column(
             children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.close, color: Colors.white),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildIcon('images/quick_request.png', '수업요청', null),
+                  SizedBox(width: 35),
+                  buildIcon(
+                      'images/quick_response.png', '응답한멘토', ReceivedEstimate()),
+                ],
               ),
-              buildIcon('images/quick_request.png', '수업요청하기', null),
-              buildIcon(
-                  'images/quick_response.png', '응답한멘토보기', ReceivedEstimate()),
-              buildIcon('images/quick_chat.png', '채팅보기', ChatList()),
-              buildIcon('images/quick_community.png', '커뮤니티', null),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildIcon('images/quick_chat.png', '채팅보기', ChatList()),
+                  SizedBox(width: 35),
+                  buildIcon('images/quick_community.png', '커뮤니티', null),
+                ],
+              ),
               // Add more child widgets within the Stack as needed
             ],
             //),

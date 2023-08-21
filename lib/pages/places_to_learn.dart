@@ -5,9 +5,11 @@ import 'package:eduMap/pages/lecture.detail.dart';
 import 'package:eduMap/utils/fetch_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:ui' as ui;
 
 import '../models/models.dart';
 
@@ -28,10 +30,14 @@ class PlacesToLearnState extends State<PlacesToLearn> {
 
   @override
   void initState() {
-    _requestLocationPermission();
-    _getBusanLectures();
-    _manager = _initClusterManager();
     super.initState();
+    asyncInit();
+    _manager = _initClusterManager();
+  }
+
+  void asyncInit() async {
+    await _requestLocationPermission();
+    await _getBusanLectures();
   }
 
   ClusterManager _initClusterManager() {
@@ -101,9 +107,9 @@ class PlacesToLearnState extends State<PlacesToLearn> {
 
   void _updateMarkers(Set<Marker> markers) {
     print('Updated ${markers.length} markers');
-    setState(() {
-      _markers = markers;
-    });
+    // setState(() {
+    //   _markers = markers;
+    // });
   }
 
   Future _getBusanLectures() async {
@@ -152,6 +158,7 @@ class PlacesToLearnState extends State<PlacesToLearn> {
         context: context,
         builder: (context) {
           return Container(
+              height: 300,
               padding: const EdgeInsets.all(10.0),
               // child: CurriculumList(curriculums),
               child: ListView.builder(
@@ -217,6 +224,21 @@ class PlacesToLearnState extends State<PlacesToLearn> {
     }
   }
 
+  void _moveCamera(double lat, double lng) async {
+    final GoogleMapController controller = await _controller.future;
+    try {
+      controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          bearing: 0,
+          target: LatLng(lat, lng),
+          zoom: 12.0,
+        ),
+      ));
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -273,17 +295,24 @@ class PlacesToLearnState extends State<PlacesToLearn> {
                             child: Row(
                               children: places
                                   .map((item) => GestureDetector(
-                                        // onTap: () =>
-                                        //     showDetailCallback(item.lecture),
+                                        onTap: () {
+                                          _showDetail(item.lecture);
+                                          _moveCamera(item.latLng.latitude,
+                                              item.latLng.longitude);
+                                        },
                                         child: Card(
+                                          shadowColor: Colors.blue,
+                                          elevation: 5,
+                                          color: Colors.blue[500],
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 5),
                                             child: Center(
                                               child: Text(
                                                 item.name,
                                                 style: TextStyle(
-                                                  color: Colors.grey[800],
-                                                ),
+                                                    color: Colors.white,
+                                                    fontSize: 14),
                                               ),
                                             ),
                                           ),
@@ -301,5 +330,42 @@ class PlacesToLearnState extends State<PlacesToLearn> {
               ),
       ),
     );
+  }
+}
+
+Future<Uint8List?> getMarkerIcon(String? streetViewUrl) async {
+  if (streetViewUrl == null) return null;
+  final NetworkAssetBundle bundle =
+      NetworkAssetBundle(Uri.parse(streetViewUrl));
+  try {
+    final ByteData byteData = await bundle.load('');
+    Uint8List resizedData = byteData.buffer.asUint8List();
+    final ui.Codec codec = await ui.instantiateImageCodec(resizedData);
+    final ui.FrameInfo imageFI = await codec.getNextFrame();
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    const int size = 100;
+    //make canvas clip path to prevent image drawing over the circle
+    final Path clipPath = Path();
+    clipPath.addRRect(RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+        const Radius.circular(40)));
+
+    canvas.clipPath(clipPath);
+    paintImage(
+      canvas: canvas,
+      rect: Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+      image: imageFI.image,
+    );
+    //convert canvas as PNG bytes
+    final image = await pictureRecorder
+        .endRecording()
+        .toImage(size, (size * 1.1).toInt());
+    final data = await image.toByteData(format: ui.ImageByteFormat.png);
+    //convert PNG bytes as BitmapDescriptor
+    return data!.buffer.asUint8List();
+  } catch (e) {
+    print('Failed to load marker icon: $e');
+    return null;
   }
 }

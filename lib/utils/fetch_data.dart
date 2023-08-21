@@ -7,9 +7,10 @@ import 'dart:convert';
 Future<List<Place>?> getLectureMarkers() async {
   http.Response response;
   try {
-    response = await http
-        .get(Uri.parse('http://192.168.0.21:3000/api/getBusanLecture'));
+    response =
+        await http.get(Uri.parse('https://xros.kr/cms/eduMap/getBusanLecture'));
   } catch (e) {
+    print(e);
     return null;
   }
 
