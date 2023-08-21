@@ -1,9 +1,12 @@
 import 'package:eduMap/pages/chat_list.dart';
 import 'package:eduMap/pages/empty.dart';
 import 'package:eduMap/pages/home.dart';
+import 'package:eduMap/pages/login_page.dart';
 import 'package:eduMap/pages/places_to_learn.dart';
 import 'package:eduMap/pages/received_estimate.dart';
+import 'package:eduMap/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -24,6 +27,16 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    Future handleSignOut() async {
+      authProvider.handleSignOut();
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        (Route<dynamic> route) => false,
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -34,9 +47,11 @@ class _WrapperState extends State<Wrapper> {
           title: Image.asset('images/logo.png', width: 150),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  handleSignOut();
+                },
                 icon: Icon(
-                  Icons.access_alarm_sharp,
+                  Icons.logout,
                   color: Colors.black45,
                   size: 30,
                 )),

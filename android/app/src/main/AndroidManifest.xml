@@ -11,6 +11,21 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="eduMap">
+        <!-- Setting for Kakao Login Custom URI Scheme -->
+        <activity 
+            android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity"
+            android:exported="true">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Setting for "kakao${YOUR_NATIVE_APP_KEY}://oauth" type app execution scheme -->
+                <!-- Kakao Login Redirect URI -->
+                <data android:scheme="kakao58e39125d3b3bfcf5e353aebbf9c8f5a" android:host="oauth"/>
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />

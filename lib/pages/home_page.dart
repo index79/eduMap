@@ -142,8 +142,6 @@ class HomePageState extends State<HomePage> {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    print(remoteNotification);
-
     await flutterLocalNotificationsPlugin.show(
       0,
       remoteNotification.title,

@@ -148,8 +148,6 @@ class ChatListState extends State<ChatList> {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    print(remoteNotification);
-
     await flutterLocalNotificationsPlugin.show(
       0,
       remoteNotification.title,
@@ -194,7 +192,6 @@ class ChatListState extends State<ChatList> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        print(snapshot.data?.docs.length);
                         if ((snapshot.data?.docs.length ?? 0) > 0) {
                           return ListView.builder(
                             padding: EdgeInsets.all(10),

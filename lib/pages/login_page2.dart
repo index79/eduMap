@@ -46,7 +46,7 @@ class LoginPageState extends State<LoginPage> {
             Center(
               child: TextButton(
                 onPressed: () async {
-                  authProvider.handleSignIn().then((isSuccess) {
+                  authProvider.handleSignIn('google').then((isSuccess) {
                     if (isSuccess) {
                       Navigator.pushReplacement(
                         context,

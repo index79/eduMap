@@ -63,30 +63,15 @@ class LoginPageState extends State<LoginPage> {
           const SizedBox(height: 25),
           TextButton(
             onPressed: () async {
-              // setState(() => loading = true);
-              // var result = await _auth.signInWithKakao();
-              // signInErrorIfResultNull(result);
+              handleLogIn(authProvider, context, 'kakao');
             },
             style: styleButton,
             child: SizedBox(
                 width: 250, child: Image.asset('images/kakao_button.png')),
           ),
           TextButton(
-            onPressed: () async {
-              setState(() => loading = true);
-              authProvider.handleSignIn().then((isSuccess) {
-                if (isSuccess) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Wrapper(),
-                    ),
-                  );
-                }
-              }).catchError((error, stackTrace) {
-                Fluttertoast.showToast(msg: error.toString());
-                authProvider.handleException();
-              });
+            onPressed: () {
+              handleLogIn(authProvider, context, 'google');
             },
             style: styleButton,
             child: SizedBox(
@@ -138,6 +123,26 @@ class LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  Future<void> handleLogIn(
+      AuthProvider authProvider, BuildContext context, String provider) async {
+    setState(() => loading = true);
+    await authProvider.handleSignIn(provider).then((isSuccess) {
+      if (isSuccess) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Wrapper(),
+          ),
+        );
+      }
+    }).catchError((error, stackTrace) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+    setState(() => loading = false);
+
+    authProvider.handleException();
   }
 }
 

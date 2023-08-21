@@ -17,7 +17,6 @@ class HomeProvider {
   Stream<QuerySnapshot> getStreamFireStore(
       String pathCollection, int limit, String? textSearch) {
     if (textSearch?.isNotEmpty == true) {
-      print(textSearch);
       return firebaseFirestore
           .collection(pathCollection)
           // .where(FirestoreConstants.nickname, isGreaterThan: textSearch)

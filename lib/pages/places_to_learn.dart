@@ -107,7 +107,6 @@ class PlacesToLearnState extends State<PlacesToLearn> {
   }
 
   Future _getBusanLectures() async {
-    if (!mounted) return;
     List<Place>? fetchedPlaces = await getLectureMarkers();
     if (fetchedPlaces == null) return;
     setState(() {
