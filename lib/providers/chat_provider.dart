@@ -45,12 +45,20 @@ class ChatProvider {
   }
 
   Stream<QuerySnapshot> getStreamFireStore(
-      String pathCollection, int limit, String userId) {
-    return firebaseFirestore
-        .collection(FirestoreConstants.pathMessageCollection)
-        .doc("j3szrxC4OtQVxqIEF2ijzvrwLrz1-123")
-        .collection("j3szrxC4OtQVxqIEF2ijzvrwLrz1-123")
-        .snapshots();
+      String pathCollection, int limit, String? textSearch) {
+    if (textSearch?.isNotEmpty == true) {
+      print(textSearch);
+      return firebaseFirestore
+          .collection(pathCollection)
+          .limit(limit)
+          .where(FirestoreConstants.nickname, isEqualTo: textSearch)
+          .snapshots();
+    } else {
+      return firebaseFirestore
+          .collection(pathCollection)
+          .limit(limit)
+          .snapshots();
+    }
   }
 
   void sendMessage(String content, int type, String groupChatId,

@@ -1,6 +1,6 @@
 import 'package:eduMap/pages/wrapper.dart';
+import 'package:eduMap/widgets/spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:eduMap/constants/color_constants.dart';
 import 'package:eduMap/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(seconds: 2), () {
       // just delay for showing this slash page clearer because it too fast
       checkSignedIn();
     });
@@ -42,21 +42,26 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+      body: SafeArea(
+        child: Stack(
           children: [
-            Image.asset(
-              "images/app_icon.png",
-              width: 100,
-              height: 100,
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return AspectRatio(
+                  aspectRatio: constraints.maxWidth / constraints.maxHeight,
+                  child: Image.asset(
+                    'images/splash.png',
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 20),
-            Container(
-              width: 20,
-              height: 20,
-              child:
-                  CircularProgressIndicator(color: ColorConstants.themeColor),
+            Center(
+              child: SizedBox(
+                  height: 100,
+                  child: Spinner(
+                    color: 'white',
+                  )),
             ),
           ],
         ),

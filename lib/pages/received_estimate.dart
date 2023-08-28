@@ -120,17 +120,17 @@ class ReceivedEstimate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('응답한 멘토 보기'),
-        elevation: 0,
-        actions: [
-          Icon(Icons.notifications_none_rounded),
-          SizedBox(width: 20),
-          Icon(Icons.person_outline),
-          SizedBox(width: 20),
-          OutlinedButton(onPressed: () {}, child: Text('이용안내'))
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text('응답한 멘토 보기'),
+      //   elevation: 0,
+      //   actions: [
+      //     Icon(Icons.notifications_none_rounded),
+      //     SizedBox(width: 20),
+      //     Icon(Icons.person_outline),
+      //     SizedBox(width: 20),
+      //     OutlinedButton(onPressed: () {}, child: Text('이용안내'))
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eduMap/constants/style_constant.dart';
 import 'package:eduMap/models/category.dart';
 import 'package:eduMap/models/learning_place.dart';
+import 'package:eduMap/widgets/carousal_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -11,8 +12,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
-int currentImageIndex = 0;
 
 class _HomeState extends State<Home> {
   _learningPlaceList() {
@@ -87,58 +86,58 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _carousalSlider() {
-    List<String> imageUrls = [
-      'https://picsum.photos/id/237/400/300',
-      'https://picsum.photos/id/10/400/300',
-      'https://picsum.photos/id/11/400/300',
-    ];
+  // carousalSlider() {
+  //   List<String> imageUrls = [
+  //     'https://picsum.photos/id/237/400/300',
+  //     'https://picsum.photos/id/10/400/300',
+  //     'https://picsum.photos/id/11/400/300',
+  //   ];
 
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              initialPage: 0,
-              viewportFraction: 1,
-              enlargeCenterPage: true,
-              autoPlay: true,
-              onPageChanged: (index, reason) => setState(() {
-                currentImageIndex = index;
-              }),
-            ),
-            items: imageUrls.map(
-              (url) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Image.network(url, fit: BoxFit.fill),
-                      ),
-                    );
-                  },
-                );
-              },
-            ).toList(),
-          ),
-          SizedBox(height: 10),
-          AnimatedSmoothIndicator(
-            activeIndex: currentImageIndex,
-            count: imageUrls.length,
-            effect: JumpingDotEffect(
-              dotHeight: 10,
-              dotWidth: 10,
-              activeDotColor: Colors.blue,
-              dotColor: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  //   return Container(
+  //     padding: EdgeInsets.all(10),
+  //     child: Column(
+  //       children: [
+  //         CarouselSlider(
+  //           options: CarouselOptions(
+  //             initialPage: 0,
+  //             viewportFraction: 1,
+  //             enlargeCenterPage: true,
+  //             autoPlay: true,
+  //             onPageChanged: (index, reason) => setState(() {
+  //               currentImageIndex = index;
+  //             }),
+  //           ),
+  //           items: imageUrls.map(
+  //             (url) {
+  //               return Builder(
+  //                 builder: (BuildContext context) {
+  //                   return ClipRRect(
+  //                     borderRadius: BorderRadius.circular(20.0),
+  //                     child: SizedBox(
+  //                       width: MediaQuery.of(context).size.width * 0.9,
+  //                       child: Image.network(url, fit: BoxFit.fill),
+  //                     ),
+  //                   );
+  //                 },
+  //               );
+  //             },
+  //           ).toList(),
+  //         ),
+  //         SizedBox(height: 10),
+  //         AnimatedSmoothIndicator(
+  //           activeIndex: currentImageIndex,
+  //           count: imageUrls.length,
+  //           effect: JumpingDotEffect(
+  //             dotHeight: 10,
+  //             dotWidth: 10,
+  //             activeDotColor: Colors.blue,
+  //             dotColor: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +172,11 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _carousalSlider(),
+              CarousalSlider(imageUrls: [
+                'https://picsum.photos/id/237/400/300',
+                'https://picsum.photos/id/10/400/300',
+                'https://picsum.photos/id/11/400/300',
+              ], isNetwork: true),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

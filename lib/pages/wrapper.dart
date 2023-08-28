@@ -1,8 +1,9 @@
 import 'package:eduMap/pages/chat_list.dart';
 import 'package:eduMap/pages/empty.dart';
+import 'package:eduMap/pages/find_mentors.dart';
 import 'package:eduMap/pages/home.dart';
 import 'package:eduMap/pages/login_page.dart';
-import 'package:eduMap/pages/places_to_learn.dart';
+import 'package:eduMap/pages/lecture_map.dart';
 import 'package:eduMap/pages/received_estimate.dart';
 import 'package:eduMap/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,9 @@ class _WrapperState extends State<Wrapper> {
       Home(),
       PlacesToLearn(),
       Empty(),
+      // ChatList(),
+      FindMentors(),
       ReceivedEstimate(),
-      ChatList(),
     ];
 
     return MaterialApp(

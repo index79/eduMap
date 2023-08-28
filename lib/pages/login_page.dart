@@ -1,14 +1,10 @@
 import 'package:eduMap/pages/wrapper.dart';
+import 'package:eduMap/widgets/spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:eduMap/constants/app_constants.dart';
-import 'package:eduMap/constants/color_constants.dart';
 import 'package:eduMap/providers/auth_provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
-import '../widgets/widgets.dart';
-import 'pages.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -100,7 +96,7 @@ class LoginPageState extends State<LoginPage> {
                 child: Image.asset('images/apple_button.png'),
               ),
             ),
-            SizedBox(height: 100, child: loading ? spinkit : Container()),
+            SizedBox(height: 100, child: loading ? Spinner() : Container()),
             SizedBox(
               height: 100,
               child: Row(
@@ -154,11 +150,3 @@ final styleButton = TextButton.styleFrom(
 
 final buttomTextStyle =
     const TextStyle(fontSize: 12, color: Colors.grey, letterSpacing: 1.5);
-
-final spinkit = SpinKitCircle(
-  itemBuilder: (BuildContext context, int index) {
-    return const DecoratedBox(
-      decoration: BoxDecoration(color: Color.fromARGB(255, 125, 125, 125)),
-    );
-  },
-);
