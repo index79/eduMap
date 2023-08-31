@@ -4,6 +4,7 @@ import 'package:eduMap/pages/find_mentors.dart';
 import 'package:eduMap/pages/home.dart';
 import 'package:eduMap/pages/login_page.dart';
 import 'package:eduMap/pages/lecture_map.dart';
+import 'package:eduMap/pages/my_settings.dart';
 import 'package:eduMap/pages/received_estimate.dart';
 import 'package:eduMap/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _WrapperState extends State<Wrapper> {
       Empty(),
       // ChatList(),
       FindMentors(),
-      ReceivedEstimate(),
+      MySetting(),
     ];
 
     return MaterialApp(
@@ -75,17 +76,6 @@ class _WrapperState extends State<Wrapper> {
             )
           ],
         ),
-        // body: Stack(
-        //   index: _selectedIndex,
-
-        //   children: const [
-        //     Home(),
-        //     PlacesToLearn(),
-        //     Empty(),
-        //     ReceivedEstimate(),
-        //     ChatList(),
-        //   ],
-        // ),
         body: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
@@ -101,7 +91,7 @@ class _WrapperState extends State<Wrapper> {
                 bottomeNavigationBarItem(
                     3, 'images/bottom_icon_findmentor.png', '멘토찾기'),
                 bottomeNavigationBarItem(
-                    4, 'images/bottom_icon_library.png', '받은 견적'),
+                    4, 'images/bottom_icon_library.png', '내서재'),
               ],
               type: BottomNavigationBarType.fixed,
               currentIndex: _selectedIndex,
@@ -158,14 +148,21 @@ class _WrapperState extends State<Wrapper> {
                   buildIcon('images/quick_request.png', '수업요청', null),
                   SizedBox(width: 35),
                   buildIcon(
-                      'images/quick_response.png', '응답한멘토', ReceivedEstimate()),
+                    'images/quick_response.png',
+                    '응답한멘토',
+                    ReceivedEstimate(),
+                  ),
                 ],
               ),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildIcon('images/quick_chat.png', '채팅보기', ChatList()),
+                  buildIcon(
+                    'images/quick_chat.png',
+                    '채팅보기',
+                    ChatList(),
+                  ),
                   SizedBox(width: 35),
                   buildIcon('images/quick_community.png', '커뮤니티', null),
                 ],
