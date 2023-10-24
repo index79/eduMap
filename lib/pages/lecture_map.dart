@@ -329,14 +329,12 @@ class PlacesToLearnState extends State<PlacesToLearn> {
               onCameraIdle: _manager.updateMap,
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
-                height: MediaQuery.of(context).size.width * 0.63,
-                child: places.isEmpty
-                    ? Container()
-                    : (selectedPlaceDetail == null)
-                        ? placesList(places)
-                        : curriculumList(selectedPlaceDetail!)),
+          Expanded(
+            child: places.isEmpty
+                ? Container()
+                : (selectedPlaceDetail == null)
+                    ? placesList(places)
+                    : curriculumList(selectedPlaceDetail!),
           ),
         ],
       ),
@@ -377,60 +375,63 @@ class PlacesToLearnState extends State<PlacesToLearn> {
       );
 
   Widget curriculumList(Place place) {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: [
-              Positioned(
-                  child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedPlaceDetail = null;
-                  });
-                },
-                child: Icon(Icons.arrow_back),
-              )),
-              Center(
-                  child: Text(
-                place.name,
-                style: StyleConstants.headingBlue,
-              )),
-            ],
-          ),
-        ),
-        Container(
-            height: 190,
-            child: ListView.builder(
-              itemCount: place.lecture.length,
-              itemBuilder: (context, index) {
-                Lecture lecture = place.lecture[index];
-                return GestureDetector(
-                  behavior: HitTestBehavior.opaque,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
+              children: [
+                Positioned(
+                    child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              LectureDetail(place: place, lecture: lecture),
-                        ));
+                    setState(() {
+                      selectedPlaceDetail = null;
+                    });
                   },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(lecture.eduNm),
-                        Icon(Icons.location_on),
-                      ],
+                  child: Icon(Icons.arrow_back),
+                )),
+                Center(
+                    child: Text(
+                  place.name,
+                  style: StyleConstants.headingBlue,
+                )),
+              ],
+            ),
+          ),
+          Container(
+              height: 190,
+              child: ListView.builder(
+                itemCount: place.lecture.length,
+                itemBuilder: (context, index) {
+                  Lecture lecture = place.lecture[index];
+                  return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                LectureDetail(place: place, lecture: lecture),
+                          ));
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(lecture.eduNm),
+                          Icon(Icons.location_on),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            )),
-      ],
+                  );
+                },
+              )),
+        ],
+      ),
     );
   }
 }
